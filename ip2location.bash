@@ -20,7 +20,7 @@ fi
 # Build dynamic download command.
 download_cmd="${script_dir}/download.out -f ${database_code} -t ${token} -o ${output_filename}"
 
-# THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES WITHIN 24 HOURS
+# THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES WITHIN 24 HOURS --> https://lite.ip2location.com/database-download
 # Execute dynamically generated download command.
 eval "${download_cmd}"
 
