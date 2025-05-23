@@ -10,13 +10,15 @@ database_code=DB11LITEBINIPV6
 # output filename
 output_filename=a.zip
 
+cd "${script_dir}"
+
 # If the file does not exist, compile go download code.
-if ! test -f download;then
-	go build -o download download.go
+if ! test -f download.out ; then
+	go build -o download.out download.go
 fi
 
 # Build dynamic download command.
-download_cmd="${script_dir}/download -f ${database_code} -t ${token} -o ${output_filename}"
+download_cmd="${script_dir}/download.out -f ${database_code} -t ${token} -o ${output_filename}"
 
 # THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES WITHIN 24 HOURS
 # Execute dynamically generated download command.

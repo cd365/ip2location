@@ -1,4 +1,5 @@
 .*
+*.out
 *.tar.bz2.*
 *.zip*
 !.gitignore
