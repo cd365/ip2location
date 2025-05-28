@@ -18,6 +18,9 @@ if ! test -f download.out ; then
 fi
 
 # Build dynamic download command.
+if test -f ${output_filename} ; then
+    rm -f ${output_filename}
+fi
 download_cmd="${script_dir}/download.out -f ${database_code} -t ${token} -o ${output_filename}"
 
 # THIS FILE CAN ONLY BE DOWNLOADED 5 TIMES WITHIN 24 HOURS --> https://lite.ip2location.com/database-download
