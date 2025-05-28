@@ -14,7 +14,7 @@ cd "${script_dir}"
 
 # If the file does not exist, compile go download code.
 if ! test -f download.out ; then
-	go build -o download.out download.go
+    go build -o download.out download.go
 fi
 
 # Build dynamic download command.
@@ -25,10 +25,24 @@ download_cmd="${script_dir}/download.out -f ${database_code} -t ${token} -o ${ou
 eval "${download_cmd}"
 
 unzip -o ${output_filename} -d .
-tar -jcvf IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2 IP2LOCATION-LITE-DB11.IPV6.BIN LICENSE_LITE.TXT README_LITE.TXT
+file=IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2
+file1="${file}.1"
+if test -f "${file}" ; then
+    rm -f "${file}"
+fi
+tar -jcvf "${file}" IP2LOCATION-LITE-DB11.IPV6.BIN LICENSE_LITE.TXT README_LITE.TXT
 rm -f IP2LOCATION-LITE-DB11.IPV6.BIN LICENSE_LITE.TXT README_LITE.TXT
 
-git add IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2
+if test -f "${file1}" ; then
+    hash=$(sha256sum "${file}" | awk '{print $1}')
+    hash1=$(sha256sum "${file1}" | awk '{print $1}')
+    if [ "${hash}" == "${hash1}" ]; then
+        git checkout .
+        exit
+    fi
+fi
+
+git add *.tar.bz2
 git commit -m "Update IP database"
 git push origin master
 
@@ -49,4 +63,5 @@ do
     fi
 done
 
-mv IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2 IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2.1
+cp IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2 IP2LOCATION-LITE-DB11.IPV6.BIN.tar.bz2.1
+
